@@ -7,7 +7,7 @@ import {
 
 const Button = (props) =>{
     return(
-        <TouchableOpacity style={styles.buttonText}
+        <TouchableOpacity style={styles.button}
             onPress = {props.onPress}>
             <Text style={styles.buttonText} >
                 { props.children }
@@ -27,8 +27,9 @@ const styles = StyleSheet.create({
         flex: 1
     }, buttonText:{
         color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontSize: 15
     }
 });
 
