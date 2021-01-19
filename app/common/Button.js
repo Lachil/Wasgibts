@@ -17,19 +17,22 @@ const Button = (props) =>{
 }
 
 const styles = StyleSheet.create({
+   
     button:{
+        backgroundColor: '#788eec',
         height: 45,
         borderRadius: 5,
         marginHorizontal: 25,
         marginVertical: 10,
-        backgroundColor: 'rgb(42, 55, 68)',
+        //backgroundColor: 'rgb(42, 55, 68)',
+        alignItems: 'center',
         justifyContent: 'center',
         flex: 1
     }, buttonText:{
         color: 'white',
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 15
+        fontSize: 16
     }
 });
 
