@@ -74,6 +74,10 @@ class Login  extends Component {
     this.props.navigation.navigate('Home')
   }
 
+  regist(){
+    this.props.navigation.navigate('Regist')  
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.user) {
       this.home();
@@ -89,10 +93,7 @@ class Login  extends Component {
     if (this.props.loading) {
       return (<Button ><Spinner /> </Button>);
     }
-    return (
-      <Button onPress= {this.onLoginPressed.bind(this)}>
-        <Text style={styles.buttonTitle}>Log in</Text></Button>
-      );
+    return (<Button style={styles.buttonTitle} onPress= {this.onLoginPressed.bind(this)}>Log in</Button>);
   }
 
 
@@ -125,13 +126,13 @@ class Login  extends Component {
        underlineColorAndroid='transparent'
        autoCapitalize='none'
      />
-     <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
-          <Button style={styles.buttonTitle}>Log in</Button>
+     <TouchableOpacity style={styles.button} >
+      {this._renderButton()}
         </TouchableOpacity>
         <View style={styles.fView}>
           <Text style={styles.fText}>
             Don&apos;t have an account?{' '}
-            <Text  style={styles.SLink} onPress = {this.home.bind(this)} >
+            <Text  style={styles.SLink} onPress = {this.regist.bind(this)} >
               Sign up
             </Text>
           </Text>

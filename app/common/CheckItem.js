@@ -44,9 +44,7 @@ class CheckItem  extends Component {
                 <CheckBox
                     style = {styles.checkBox}
                     value={this.state.checked}
-                    onValueChange = {this.props.onValueChange}
                     onValueChange={() => {
-                        this.props.onValueChange();
                         console.log('CheckItem');
                         this.setState({ checked: !this.state.checked });
                     } }

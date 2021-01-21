@@ -3,7 +3,9 @@ import {Text, FlatList, View, StyleSheet} from 'react-native';
 import Textarea from 'react-native-textarea';
 
 import CategoryList from './common/CategoryList';
-import {Button, Card, CardItem} from './common'
+import {Button, Card, CardItem,
+     CategoryDrowpDown
+} from './common'
 
 const styles = StyleSheet.create({
     text:{
@@ -44,12 +46,9 @@ class NewEntry  extends Component {
                 />
                 </CardItem>
                     <CardItem>
-                            <CategoryList checkedItem = {this.state.category}
-                            checkedItems = {[]}
-                            >
-                        Wählen Sie die Kategorien, die Sie abonieren wollen:</CategoryList>
+                        <CategoryDrowpDown></CategoryDrowpDown>
                     </CardItem>
-                
+                    
                     <CardItem>
                         <Button>Einfügen !</Button>
                     </CardItem>
