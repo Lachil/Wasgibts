@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet,Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 import {Spinner} from './common';
 import { TOKEN } from './redux';
@@ -15,9 +16,11 @@ class StartPage extends Component{
     componentDidMount() {
         AsyncStorage.getItem(TOKEN).then((token) => {
             if (token) {
-                this._navigate('Login');
+                this._navigate('Home');
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+                console.log('token is setted: ' + axios.defaults.headers.common['Authorization']);
               }else {
-                this._navigate('StartPage');
+                this._navigate('Login');
               }
         }) 
       }
@@ -36,7 +39,7 @@ class StartPage extends Component{
               <Text style={styles.subTitle} >Willkomen zu unsere App</Text>
               <Image
           style={styles.logo}
-          source={require('./assets/icon.png')}
+          source={require('./assets/logo.png')}
         />
                 <Spinner />
             </View>
@@ -47,8 +50,6 @@ class StartPage extends Component{
 const styles = StyleSheet.create({
   logo: {
     flex: 1,
-    height: 280,
-    width: 350,
     alignSelf: 'center',
     margin: 80,
   },

@@ -6,7 +6,7 @@ import {URL_LOGIN, ON_LOGIN, LOGIN_FAILED, LOGIN_SUCCESS,
     URL_ALL_CATEGORIES, URL_ADD_CATEGORY, UPDATE_CATEGORIES, ADD_CATEGORY
     , GET_ALL_CATEGORIES, GET_ALL_CATEGORIES_SUCCESS, GET_ALL_CATEGORIES_FAILD 
     ,LOADING_DATA,LOADING_SUCCESS, LOADING_FAILD,
-  TOKEN, USER, GET_ALL_ENTRIES} from '../Constants'
+  TOKEN, USER, GET_ALL_ENTRIES, ADD_ENTRY, URL_ADD_ENTRY, ACTION_ENTRY_SUCCESS, ACTION_ENTRY_FAILD} from '../Constants'
 
 //user actions
 export const onLogin =({username, password}) => {
@@ -22,26 +22,44 @@ export const onLogin =({username, password}) => {
 export const onRegist =({username, password, categories}) => {
   return (dispatch) => {      
       dispatch({ type: ON_REGIST });
-      axios.post( URL_REGIST,
-      { username, password, categories })
+      axios.post( URL_REGIST, { username, password, categories })
           .then(resp => handleResponse(dispatch, resp.data, ON_REGIST))
           .catch(error => onFailed(dispatch, 'Registierung fehlgeschlagen!', ON_REGIST) );
   }
 } 
 
-
+// categories actions
 export const getAllCategories =() => {
   return (dispatch) => {        
     dispatch({ type: GET_ALL_CATEGORIES });
     axios.get( URL_ALL_CATEGORIES)
         .then(resp => handleResponse(dispatch, resp.data, GET_ALL_CATEGORIES))
-        .catch(error => onLoadingFailed(dispatch, 'Fehler beim Daten holen!', GET_ALL_CATEGORIES) );      
+        .catch(error => onLoadingFailed(dispatch, 'Fehler beim Daten holen!', GET_ALL_CATEGORIES) );  
+        
+        /**
+         * TODO -- test  onLoadingFailed
+         */
+
   }
 } 
 
+
+// entry actions
+export const addEntry =({text, category}) => {
+  return (dispatch) => {        
+    dispatch({ type: ADD_ENTRY });
+    axios.get( URL_ADD_ENTRY)
+        .then(resp => handleResponse(dispatch, resp.data, ADD_ENTRY))
+        .catch(error => onFailed(dispatch, 'Eintrag konnte nicht eingefügt werden!', ADD_ENTRY) );      
+  }
+} 
+
+
+// handle response
 const onSuccess = (dispatch, data, type) => {
   switch(type){
     case ON_LOGIN:
+      console.log('data: ' + JSON.stringify(data));
       AsyncStorage.setItem(USER, data.user);
       AsyncStorage.setItem(TOKEN, data.token)
       .then(() => {
@@ -61,6 +79,10 @@ const onSuccess = (dispatch, data, type) => {
     case GET_ALL_CATEGORIES:
       dispatch({ type: GET_ALL_CATEGORIES_SUCCESS, data });
     break;
+    case ADD_ENTRY:
+      dispatch({ type: ACTION_ENTRY_SUCCESS, data });
+    break;
+    
 
   }
   };
@@ -79,6 +101,10 @@ const onSuccess = (dispatch, data, type) => {
       case GET_ALL_CATEGORIES:
         dispatch({ type: GET_ALL_CATEGORIES_FAILD, error})
       break;
+      case ADD_ENTRY:
+        dispatch({ type: ACTION_ENTRY_FAILD, error})
+      break;
+      
     }
   };
   
@@ -114,6 +140,14 @@ const onSuccess = (dispatch, data, type) => {
           onSuccess(dispatch, data, type);
         }
       break;
+      case ADD_ENTRY:
+        if (!data) {
+          onFailed(dispatch, data.error, type);
+        }else {
+          onSuccess(dispatch, data, type);
+        }
+      break;
+      
 
     }
   }

@@ -11,6 +11,7 @@ import Login from './Login';
 import Home from './Home';
 import Regist from './Regist';
 import NewEntry from './NewEntry';
+import Info from './Info';
 
 const Stack = createStackNavigator();
 
@@ -19,15 +20,20 @@ function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen name="NewEntry" component={NewEntry}  />
-        <Stack.Screen name="Login" component={Login} options={{ 
-            headerLeft: null }}/>
+        <Stack.Screen name="Home" component={Home} options={{ 
+            headerLeft: null }}/> 
+        
         <Stack.Screen name="StartPage" component={StartPage}  />
+        <Stack.Screen name="NewEntry" component={NewEntry}  />
         <Stack.Screen name="Regist" component={Regist} options={{ 
             headerLeft: null }}/>
         
-        <Stack.Screen name="Home" component={Home} options={{ 
-            headerLeft: null }}/> 
+        
+        <Stack.Screen name="Login" component={Login} options={{ 
+            headerLeft: null }}/>
+        <Stack.Screen name="Info" component={Info} options={{ 
+            headerLeft: null }}/>
+        
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

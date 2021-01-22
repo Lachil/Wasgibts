@@ -1,11 +1,14 @@
 import React,{Component} from 'react';
 import {Text, FlatList, View, StyleSheet} from 'react-native';
 import Textarea from 'react-native-textarea';
+import {connect} from 'react-redux';
+import {addEntry} from './redux';
+
 
 import CategoryList from './common/CategoryList';
-import {Button, Card, CardItem,
-     CategoryDrowpDown
-} from './common'
+import {Button, Card, CardItem, Spinner} from './common'
+import CategoryDrowpDown from './common/CategoryDrowpDown'
+
 
 const styles = StyleSheet.create({
     text:{
@@ -32,6 +35,26 @@ class NewEntry  extends Component {
         };
     }
 
+    onAddEntryPressed(){
+        console.log('state:' + JSON.stringify(this.state));
+        const { text, category } = this.state;
+        this.props.addEntry({text, category});
+      
+    }
+
+    renderAddEntryButton(){
+        if(this.props.loading){
+            return (<Button ><Spinner /> </Button>);
+        }
+        return (<Button onPress={this.onAddEntryPressed.bind(this)}>Einfügen !</Button>);
+    }
+
+    updateCategory(categoryP){
+        console.log(JSON.stringify(categoryP));
+        this.setState({ category : categoryP});
+        console.log(JSON.stringify(this.state));
+    }
+
     render(){
         return (
                 <Card>
@@ -46,15 +69,30 @@ class NewEntry  extends Component {
                 />
                 </CardItem>
                     <CardItem>
-                        <CategoryDrowpDown></CategoryDrowpDown>
+                        <CategoryDrowpDown updateParentCategory= {this.updateCategory.bind(this)}></CategoryDrowpDown>
                     </CardItem>
                     
                     <CardItem>
-                        <Button>Einfügen !</Button>
+                        {this.renderAddEntryButton()}
                     </CardItem>
+                    
+                    <CardItem>
+                        <Text>{this.props.error}</Text>
+                    </CardItem>
+                    
                 </Card>
         );
     }
 };
   
-export default NewEntry;
+
+function mapStateToProps(state) {
+    return {
+      error: state.entries.error,
+      loading: state.entries.loading,
+      success: state.entries.success
+    };
+  }
+
+
+export default connect(mapStateToProps, { addEntry })(NewEntry);

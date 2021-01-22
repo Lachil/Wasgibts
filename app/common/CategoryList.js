@@ -23,7 +23,7 @@ class CategoryList extends Component {
     super(props);
     this.state = {
       data: [],
-      'checkedItems': this.props.checkedItems,//[]
+      'checkedItems': this.props.checkedItems//[]
     };
   }
 
@@ -44,12 +44,12 @@ class CategoryList extends Component {
     console.log('onValueChanged');
     if(this.state.checkedItems){
       var index = indexOf(this.state.checkedItems, 'id',itemId);//this.state.checkedItems.indexOf({id: itemId}); 
-      if(index === -1){
-        this.state.checkedItems.push({id: itemId});
-      }else{
-        this.state.checkedItems.splice(index, 1);
-      }
-      console.log('checkedItems: ' + this.state.checkedItems);
+    if(index === -1){
+      this.state.checkedItems.push({id: itemId});
+    }else{
+      this.state.checkedItems.splice(index, 1);
+    }
+    console.log('checkedItems: ' + this.state.checkedItems);
     }
   }
 
@@ -57,14 +57,12 @@ class CategoryList extends Component {
     <CheckItem onValueChange = {() => {
       this.onValueChanged(item.id);
     }} >{item.name}</CheckItem>
-  
   );
 
   renderList(){
     return(
       <View style={styles.view}>
         <Text style = {styles.text} >{this.props.children}</Text>
-
           {((this.props.loading) && (<Spinner />))}
           <FlatList
             data={this.state.data}
