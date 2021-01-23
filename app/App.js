@@ -24,22 +24,24 @@ function App() {
     <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
-        
-        <Stack.Screen name="Home" component={Home} options={{ 
-            headerLeft: null }}/> 
-        
-        <Stack.Screen name="New" component={New} options={{ 
-            headerLeft: null }}/> 
-        <Stack.Screen name="NewCategory" component={NewCategory} options={{ 
-            headerLeft: null }}/> 
-        <Stack.Screen name="NewEntry" component={NewEntry} options={{ 
-            headerLeft: null }}/> 
-        
         <Stack.Screen name="Regist" component={Regist} options={{ 
             headerLeft: null }}/>
         
         <Stack.Screen name="Login" component={Login} options={{ 
             headerLeft: null }}/>
+      
+
+        <Stack.Screen name="Home" component={Home} options={{ 
+            headerLeft: null }}/> 
+        
+        <Stack.Screen name="New" component={New} options={{ 
+            headerLeft: null }}/> 
+        
+        <Stack.Screen name="NewCategory" component={NewCategory} options={{ 
+            headerLeft: null }}/> 
+        
+        <Stack.Screen name="NewEntry" component={NewEntry} options={{ 
+            headerLeft: null }}/> 
         
         <Stack.Screen name="Info" component={Info} options={{ 
             headerLeft: null }}/>

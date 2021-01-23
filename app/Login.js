@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Text, StyleSheet,Image,View,TextInput,TouchableOpacity} from 'react-native';
-import {Card, CardItem, Button, Input, Spinner} from './common';
+import {Card, CardItem, Button, Input, Spinner, BottomMenu} from './common';
 import {connect} from 'react-redux';
 import {onLogin} from './redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     height: 150,
     width: 200,
     alignSelf: 'center',
-    margin: 80,
+    margin: 10,
   },
   buttonTitle: {
     color: 'white',
@@ -51,7 +51,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     marginTop: 20,
-  },
+  }, menu:{
+    position: 'absolute',
+    bottom:0,
+    width: '100%',
+  }
 });
 
 
@@ -133,7 +137,11 @@ class Login  extends Component {
             </Text>
           </Text>
         </View>
+
       </KeyboardAwareScrollView>
+        <View style={styles.menu}>
+          <BottomMenu info={true} navigation={this.props.navigation}></BottomMenu>
+        </View>
        </View>);}}
        
 

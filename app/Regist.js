@@ -1,10 +1,21 @@
 import React, {Component} from 'react';
-import { Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 
 import {Card, CardItem, Button, Input, Spinner} from './common';
 import CategoryList from  './common/CategoryList'
 import {onRegist} from './redux';
+import {BottomMenu} from './common'
+
+const styles = StyleSheet.create({
+   menu:{
+    position: 'absolute',
+    bottom:0,
+    width: '100%',
+  }, container:{
+    flex:1
+  }
+});
 
 
 class Regist extends Component {
@@ -51,6 +62,7 @@ class Regist extends Component {
 
   render(){
     return (
+      <View style={styles.container}>
       <Card title= "Regestierungsform">
         <CardItem>
           <Input label='Benutzername' placeholder='Benutzername eingeben!' secureTextEntry={false}
@@ -69,6 +81,12 @@ class Regist extends Component {
         </CardItem>
         {this.errorMessage()}
       </Card>
+      <View style={styles.menu}>
+          <BottomMenu info={true} navigation={this.props.navigation}></BottomMenu>
+      </View>
+       
+      </View>
+      
     );
   }
   

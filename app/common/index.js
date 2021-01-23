@@ -6,3 +6,4 @@ export * from './Input';
 export * from './Spinner';
 export * from './CheckItem';
 export * from './TextArea';
+export * from './BottomMenu';

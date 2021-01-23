@@ -5,7 +5,19 @@ const styles = StyleSheet.create({
     menu:{
         flex: 1,
         flexDirection: 'row',
-        alignItems : 'center',    
+        alignItems : 'center',
+        marginBottom: 0,
+        backgroundColor: 'white',
+        borderWidth:2,
+        borderColor: 'black',
+        borderTopLeftRadius: 25,
+        borderTopRightRadius:25,
+        padding: 10,
+        paddingTop:0,
+        paddingBottom:0,
+        
+        
+        
     },button:{
         flex:1,
         marginRight: 5,
@@ -54,22 +66,22 @@ class BottomMenu  extends Component {
                         }}>
                             <Image source={require('../assets/editIcon.png')}/>
                         </MenuItem>}
-                    {(this.props.aboutUs) &&
+                    {(this.props.info) &&
                         <MenuItem onPress={() =>{
                             this.props.navigation.navigate('Info')}}>
-                            <Image source={require('../assets/aboutUsIcon.png')}/>
+                            <Image source={require('../assets/infoIcon.png')}/>
                         </MenuItem>}
 
                         {(this.props.newEntry) &&
                         <MenuItem onPress={() =>{
                             this.props.navigation.navigate('NewEntry')}}>
-                            <Text>Eintrag einfÜgen !</Text>
+                            <Text>Eintrag einfügen !</Text>
                         </MenuItem>}
 
                         {(this.props.newCategory) &&
                         <MenuItem onPress={() =>{
                             this.props.navigation.navigate('NewCategory')}}>
-                            <Text>Kategorie einfÜgen !</Text>
+                            <Text>Kategorie einfügen !</Text>
                         </MenuItem>}
 
 
@@ -80,4 +92,4 @@ class BottomMenu  extends Component {
 
 
   
-  export default BottomMenu;
+  export {BottomMenu};
