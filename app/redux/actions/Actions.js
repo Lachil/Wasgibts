@@ -8,7 +8,7 @@ import {URL_LOGIN, ON_LOGIN, LOGIN_FAILED, LOGIN_SUCCESS,
     ACTION_CATEGORY_FAILD,ACTION_CATEGORY_SUCCESS
     ,LOADING_DATA,LOADING_SUCCESS, LOADING_FAILD,
   TOKEN, USER
-  , GET_ALL_ENTRIES,ADD_ENTRY, URL_ADD_ENTRY, ACTION_ENTRY_SUCCESS, ACTION_ENTRY_FAILD} from '../Constants'
+  , GET_ALL_ENTRIES,ADD_ENTRY, URL_ADD_ENTRY, ACTION_ENTRY_SUCCESS, ACTION_ENTRY_FAILD, URL_ALL_ENTRIES} from '../Constants'
 
 //user actions
 export const onLogin =({username, password}) => {
@@ -66,6 +66,17 @@ export const addEntry =({text, category}) => {
   }
 } 
 
+export const getAllEntries =() => {
+  return (dispatch) => {        
+    dispatch({ type: GET_ALL_ENTRIES });
+    axios.get( URL_ALL_ENTRIES)
+        .then(resp => handleResponse(dispatch, resp.data, GET_ALL_ENTRIES))
+        .catch(error => onFailed(dispatch, 'Fehler beim Einfügen der Kategorie!', GET_ALL_ENTRIES) );      
+  }
+} 
+
+
+
 
 // handle response
 const onSuccess = (dispatch, data, type) => {
@@ -93,13 +104,16 @@ const onSuccess = (dispatch, data, type) => {
     case ADD_ENTRY:
       dispatch({ type: ACTION_ENTRY_SUCCESS, data });
     break;
+    case GET_ALL_ENTRIES:
+      dispatch({ type: ACTION_ENTRY_SUCCESS, data });
+    break;
     case GET_ALL_CATEGORIES:
       dispatch({ type: ACTION_CATEGORY_SUCCESS, data });
     break;
     case ADD_CATEGORY:
       dispatch({ type: ACTION_CATEGORY_SUCCESS, data });
     break;
-
+    
   }
   };
   
@@ -115,6 +129,9 @@ const onSuccess = (dispatch, data, type) => {
         dispatch({ type: LOADING_FAILD, error})
       break;
       case ADD_ENTRY:
+        dispatch({ type: ACTION_ENTRY_FAILD, error})
+      break;
+      case GET_ALL_ENTRIES:
         dispatch({ type: ACTION_ENTRY_FAILD, error})
       break;
       case GET_ALL_CATEGORIES:
@@ -152,6 +169,13 @@ const onSuccess = (dispatch, data, type) => {
           onSuccess(dispatch, data, type);
         }
       break;
+      case ADD_CATEGORY:
+        if (!data) {
+          onFailed(dispatch, data.error, type);
+        }else {
+          onSuccess(dispatch, data, type);
+        }
+      break;
       case LOADING_DATA:
         if (!data) {
           onFailed(dispatch, data.error, type);
@@ -166,14 +190,13 @@ const onSuccess = (dispatch, data, type) => {
           onSuccess(dispatch, data, type);
         }
       break;
-      case ADD_CATEGORY:
+      case GET_ALL_ENTRIES:
         if (!data) {
           onFailed(dispatch, data.error, type);
         }else {
           onSuccess(dispatch, data, type);
         }
       break;
-      
 
     }
   }

@@ -7,3 +7,4 @@ export * from './Spinner';
 export * from './CheckItem';
 export * from './TextArea';
 export * from './BottomMenu';
+export * from './Entry';

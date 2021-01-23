@@ -15,9 +15,6 @@ const styles = StyleSheet.create({
         padding: 10,
         paddingTop:0,
         paddingBottom:0,
-        
-        
-        
     },button:{
         flex:1,
         marginRight: 5,
@@ -31,6 +28,8 @@ const styles = StyleSheet.create({
         borderTopRightRadius:25,
         alignItems : 'center',
         height: 40
+    }, menuText:{
+        fontSize: 16
     }
 });
 
@@ -75,13 +74,13 @@ class BottomMenu  extends Component {
                         {(this.props.newEntry) &&
                         <MenuItem onPress={() =>{
                             this.props.navigation.navigate('NewEntry')}}>
-                            <Text>Eintrag einfügen !</Text>
+                            <Text style={styles.menuText}>Eintrag einfügen !</Text>
                         </MenuItem>}
 
                         {(this.props.newCategory) &&
                         <MenuItem onPress={() =>{
                             this.props.navigation.navigate('NewCategory')}}>
-                            <Text>Kategorie einfügen !</Text>
+                            <Text style={styles.menuText}>Kategorie einfügen !</Text>
                         </MenuItem>}
 
 
