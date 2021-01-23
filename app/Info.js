@@ -59,12 +59,12 @@ class Info  extends Component {
                         <View style = {styles.title}>    
                             <Text>Über die App</Text>
                         </View>
-                    <Text style={styles.text}>In dieser Arbeit haben wir uns für ein App, der eine Soziale Netzwerk zur Verfügung stellt. Dies soll aber allerdings für informative, weiterentwickelnde Informationen verwendet werden.
-warum die App das Leben der Menschen verbessert?
-Sie haben Interesse und Leidenschaft an einem Thema und wollen sich um alles Neues um das Thema informiert werden. Sie müssen jeden Tag selber am Internet um das Thema lange recherchieren müssen oder in die Fachzeitung nach dem Thema suchen? Wenn ja, würde Ihnen dies App behilflich sein. 
-Die App ist dafür gedacht Benutzern an ihre Interessen und Leidenschaften auf dem Laufenden zu halten. Alle Einträge der App sind nach Kategorien angeordnet, von daher wird die App den Benutzern nur Einträge zeigen, deren Kategorie von Benutzer abonniert wurde. 
-Benutzern können selber sowohl Kategorien als auch Einträge in App einfügen. Dies ermöglicht Benutzern eigene Kategorien, an denen Sie  Interesse haben, zu erstellen. Eingefügte Einträge  können alles Neues rund um das Kategorie Thema sein.
-</Text>
+                    <Text style={styles.text}>
+                    warum die App das Leben der Menschen verbessert?
+                    Sie haben Interesse und Leidenschaft an einem Thema und wollen sich um alles Neues um das Thema informiert werden. Sie müssen jeden Tag selber am Internet um das Thema lange recherchieren müssen oder in die Fachzeitung nach dem Thema suchen? Wenn ja, würde Ihnen dies App behilflich sein. 
+                    Die App ist dafür gedacht Benutzern an ihre Interessen und Leidenschaften auf dem Laufenden zu halten. Alle Einträge der App sind nach Kategorien angeordnet, von daher wird die App den Benutzern nur Einträge zeigen, deren Kategorie von Benutzer abonniert wurde. 
+                    Benutzern können selber sowohl Kategorien als auch Einträge in App einfügen. Dies ermöglicht Benutzern eigene Kategorien, an denen Sie  Interesse haben, zu erstellen. Eingefügte Einträge  können alles Neues rund um das Kategorie Thema sein.
+                    </Text>
                     </View>
 
                 </View>

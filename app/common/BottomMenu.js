@@ -18,12 +18,13 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 25,
         borderTopRightRadius:25,
         alignItems : 'center',
+        height: 40
     }
 });
 
 
 
-const MenuItem = (props) =>{
+export const MenuItem = (props) =>{
     return(
             <TouchableOpacity style={styles.button}
                 onPress = {props.onPress}>
@@ -34,14 +35,15 @@ const MenuItem = (props) =>{
     );
 }
 
-
 class BottomMenu  extends Component {
     render(){
         return (
             <View style={styles.menu}>
+                {this.props.items}
+
                 {(this.props.add) &&
                     <MenuItem onPress={() =>{
-                        this.props.navigation.navigate('NewEntry')
+                        this.props.navigation.navigate('New')
                     } }> 
                         <Image source={require('../assets/addIcon.png')}/>
                     </MenuItem>}
@@ -57,6 +59,20 @@ class BottomMenu  extends Component {
                             this.props.navigation.navigate('Info')}}>
                             <Image source={require('../assets/aboutUsIcon.png')}/>
                         </MenuItem>}
+
+                        {(this.props.newEntry) &&
+                        <MenuItem onPress={() =>{
+                            this.props.navigation.navigate('NewEntry')}}>
+                            <Text>Eintrag einfÜgen !</Text>
+                        </MenuItem>}
+
+                        {(this.props.newCategory) &&
+                        <MenuItem onPress={() =>{
+                            this.props.navigation.navigate('NewCategory')}}>
+                            <Text>Kategorie einfÜgen !</Text>
+                        </MenuItem>}
+
+
             </View>
         );
     }

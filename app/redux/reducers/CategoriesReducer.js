@@ -1,7 +1,7 @@
-import {  GET_ALL_CATEGORIES, GET_ALL_CATEGORIES_SUCCESS, GET_ALL_CATEGORIES_FAILD } from "../Constants";
+import {  GET_ALL_CATEGORIES, GET_ALL_CATEGORIES_SUCCESS, GET_ALL_CATEGORIES_FAILD, ADD_CATEGORY, ACTION_CATEGORY_FAILD, ACTION_CATEGORY_SUCCESS } from "../Constants";
 
 //reducers
-const INITIAL_VALUE = { data: {}, loading: false, error: '',};
+const INITIAL_VALUE = { data: {}, success : false, loading: false, error: '',};
 export const categories = (state =INITIAL_VALUE, action) => {
     console.log('categories..: ' + action.type);
     switch(action.type){
@@ -11,19 +11,26 @@ export const categories = (state =INITIAL_VALUE, action) => {
                 error:'',
                 loading:true
             }
-        case GET_ALL_CATEGORIES_SUCCESS:
+        case ADD_CATEGORY:
             return{
                 ...state,
-                error:'',
-                loading:false,
-                data: action.data
-            };
-        case GET_ALL_CATEGORIES_FAILD:
-            return {
-                ...state,
-                loading:false,
+                loading: true,
                 error: action.error
             }
+        case ACTION_CATEGORY_SUCCESS:
+            return{
+                ...state,
+                data: action.data,
+                success: true,
+                loading: false,
+            }
+        case ACTION_CATEGORY_FAILD:
+            return{
+                ...state,
+                success: false,
+                loading: false,
+                error: action.error
+            }            
         default:
             return {
                 state

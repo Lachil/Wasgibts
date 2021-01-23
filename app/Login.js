@@ -5,10 +5,6 @@ import {connect} from 'react-redux';
 import {onLogin} from './redux';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-
-
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
