@@ -14,6 +14,7 @@ import NewEntry from './NewEntry';
 import NewCategory from './NewCategory';
 import Info from './Info';
 import New from './New';
+import EntryView from './EntryView'
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,10 @@ function App() {
         <Stack.Screen name="Home" component={Home} options={{ 
             headerLeft: null }}/> 
         
+        <Stack.Screen name="EntryView" component={EntryView} options={{ 
+            headerLeft: null }}/> 
+        
+
         <Stack.Screen name="New" component={New} options={{ 
             headerLeft: null }}/> 
         

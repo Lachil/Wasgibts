@@ -40,22 +40,21 @@ class Home  extends Component {
     }   
 
     renderItem = ({ item }) => (
-        <Entry header={'#' + item.category.name  + ' @' + item.user.username + ' <' + item.creatingDate +
-        '>' }
-            body={item.text}
-            footer="footer"></Entry>
-                
-    
+        <Entry entry = {item} navigation={this.props.navigation}></Entry>    
     );
     
     render(){
         return (
+            
             <View style={styles.container}>
-                <FlatList 
-                    data={this.state.data}
-                    renderItem={this.renderItem}
-                    keyExtractor={item => item.id}      
-                />
+                {(this.props.loading) && <Text>loading ...</Text>}
+                {(this.state.data.length > 0) && <FlatList 
+                        data={this.state.data}
+                        renderItem={this.renderItem}
+                        keyExtractor={item => item.id}      
+                    />
+                }
+                
                 <View style = {styles.menu}>
                     <BottomMenu navigation={this.props.navigation} add={true} edit={true} info={true}></BottomMenu>
                 </View>

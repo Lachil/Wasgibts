@@ -1,19 +1,49 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity} from 'react-native';
 
-const Entry = (props) =>{
+class Entry extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            entry: props.entry
+        };
+    }
+    
+    getText(part){
+        let item = this.state.entry;
+        switch(part){
+            case 'header':
+            return  (  '@' + item.user.username + ' #' + item.category.name  + ' <' + item.creatingDate +'>');
+            case 'body':
+            return (item.text);
+            case 'footer':
+            return (item.comments.length === 0 ? 'Noch keine Kommentare' : (item.comments.length + ' Kommentare'));    
+        }
+    
+    }
+
+    onPress(){
+        this.props.navigation.navigate('EntryView', {entry : this.state.entry});
+    }
+
+    render(){
     return(
         <View style={styles.container}>
-            <View style={styles.header}><Text style= {styles.headerText}>{props.header}</Text></View>
-            <View style={styles.body}><Text style={styles.bodyText}>{props.body}</Text></View>
-            <View style={styles.footer}><Text style={styles.footerText} >{props.footer}</Text></View>
+            <TouchableOpacity onPress={this.onPress.bind(this)}>
+            <View style={styles.header}><Text style= {styles.headerText}>
+                {this.getText('header')}
+            </Text></View>
+            <View style={styles.body}><Text style={styles.bodyText}>{this.getText('body')}</Text></View>
+            <View style={styles.footer}><Text style={styles.footerText} >{this.getText('footer')}</Text></View>
+            </TouchableOpacity>
         </View>
         );
-}
+    }
+};
 
 const styles = StyleSheet.create({
     container:{
