@@ -12,6 +12,7 @@ export const URL_ALL_ENTRIES  = URL + '/entries/all';
 export const URL_UPDATE_ENTRIES = URL + '/entries/update';
 export const URL_ADD_ENTRY = URL + '/entries/add';
 
+export const URL_ADD_COMMENT = URL + '/comments/add';
 
 
 export const TOKEN = 'TOKEN';
@@ -40,6 +41,11 @@ export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
 export const ACTION_CATEGORY_SUCCESS = 'ACTION_CATEGORY_SUCCESS';
 export const ACTION_CATEGORY_FAILD = 'ACTION_CATEGORY_FAILD';
+
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const ACTION_COMMENT_SUCCESS = 'ACTION_COMMENT_SUCCESS';
+export const ACTION_COMMENT_FAILD = 'ACTION_COMMENT_FAILD';
+
 
 
 

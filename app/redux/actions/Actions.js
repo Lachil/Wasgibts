@@ -7,8 +7,9 @@ import {URL_LOGIN, ON_LOGIN, LOGIN_FAILED, LOGIN_SUCCESS,
     , GET_ALL_CATEGORIES, GET_ALL_CATEGORIES_SUCCESS, GET_ALL_CATEGORIES_FAILD,
     ACTION_CATEGORY_FAILD,ACTION_CATEGORY_SUCCESS
     ,LOADING_DATA,LOADING_SUCCESS, LOADING_FAILD,
-  TOKEN, USER
-  , GET_ALL_ENTRIES,ADD_ENTRY, URL_ADD_ENTRY, ACTION_ENTRY_SUCCESS, ACTION_ENTRY_FAILD, URL_ALL_ENTRIES} from '../Constants'
+    ADD_COMMENT, ACTION_COMMENT_FAILD, 
+    TOKEN, USER
+  , GET_ALL_ENTRIES,ADD_ENTRY, URL_ADD_ENTRY, ACTION_ENTRY_SUCCESS, ACTION_ENTRY_FAILD, URL_ALL_ENTRIES, URL_ADD_COMMENT, ACTION_COMMENT_SUCCESS} from '../Constants'
 
 //user actions
 export const onLogin =({username, password}) => {
@@ -51,6 +52,16 @@ export const addCategory =({name}) => {
     axios.post( URL_ADD_CATEGORY, {name})
         .then(resp => handleResponse(dispatch, resp.data, ADD_CATEGORY))
         .catch(error => onFailed(dispatch, 'Fehler beim Einfügen der Kategorie!', ADD_CATEGORY) );  
+  }
+} 
+
+export const addComment =({entryId, comment}) => {
+  return (dispatch) => {       
+    console.log('Dispatching >> ADD_COMMENT ' + JSON.stringify({entryId, comment})); 
+    dispatch({ type: ADD_COMMENT });
+    axios.post( URL_ADD_COMMENT, {entryId, comment})
+        .then(resp => handleResponse(dispatch, resp.data, ADD_COMMENT))
+        .catch(error => onFailed(dispatch, 'Fehler beim Einfügen des Kommentars!', ADD_COMMENT) );  
   }
 } 
 
@@ -113,6 +124,9 @@ const onSuccess = (dispatch, data, type) => {
     case ADD_CATEGORY:
       dispatch({ type: ACTION_CATEGORY_SUCCESS, data });
     break;
+    case ADD_COMMENT:
+      dispatch({ type: ACTION_COMMENT_SUCCESS, data });
+    break;
     
   }
   };
@@ -139,6 +153,9 @@ const onSuccess = (dispatch, data, type) => {
       break;
       case ADD_CATEGORY:
         dispatch({ type: ACTION_CATEGORY_FAILD, error})
+      break;
+      case ADD_COMMENT:
+        dispatch({ type: ACTION_COMMENT_FAILD, error})
       break;
       
     }
@@ -197,6 +214,14 @@ const onSuccess = (dispatch, data, type) => {
           onSuccess(dispatch, data, type);
         }
       break;
+      case ADD_COMMENT:
+        if (!data) {
+          onFailed(dispatch, data.error, type);
+        }else {
+          onSuccess(dispatch, data, type);
+        }
+      break;
+
 
     }
   }

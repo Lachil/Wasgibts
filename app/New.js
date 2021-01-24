@@ -20,6 +20,8 @@ const styles = StyleSheet.create({
             borderBottomWidth: 2,
             borderColor: 'black'
         },titleText:{
+            fontSize: 18,
+            fontWeight: 'bold'
         },partContainer:{ 
             borderColor: 'black',
             borderWidth: 2,
@@ -43,7 +45,7 @@ class New  extends Component {
             <View >
                 <View style={styles.partContainer}>
                     <View style = {styles.title}>    
-                        <Text>Hinweise zum Einfügen von Einträge</Text>
+                        <Text style={styles.titleText}>Hinweise zum Einfügen von Einträge</Text>
                     </View>
                     <Text style={styles.text}>
                     Diese Plattform soll nur für Lern- und Erfahrungszweck, daher sollen nur informative Einträge eingefügt werden.
@@ -51,7 +53,7 @@ class New  extends Component {
                 </View>
                 <View style={styles.partContainer}>
                     <View style = {styles.title}>    
-                        <Text>Hinweise zum Einfügen von Kategorien</Text>
+                        <Text  style={styles.titleText}>Hinweise zum Einfügen von Kategorien</Text>
                     </View>
                     <Text style={styles.text}>
                     Bitte fügen Sie nur dann Kategorien ein, wenn diese nicht exsistieren, und dies ein sinnvolle Thema anspricht.

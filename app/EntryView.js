@@ -5,20 +5,36 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
-  ScrollView, 
+  ScrollView,
+  TextInput, 
   SafeAreaView} from 'react-native';
-import {  TextInput } from 'react-native-gesture-handler';
+import {connect} from 'react-redux'
 
-import {Input, Button} from './common'
+import {Input, Button, Spinner} from './common'
+import {addComment} from './redux'
+
 
 class EntryView extends Component {
     constructor(props){
         super(props);
         
         this.state = {
-            entry: props.route.params.entry
+            entry: props.route.params.entry,
+            comment: ''
         };
         console.log('EntryView state: ' + JSON.stringify(this.state.entry));
+    }
+
+    componentWillReceiveProps(nextProps){
+        console.log('NewEntry: ' + JSON.stringify(nextProps));
+        if(nextProps.data){
+            this.setState({
+                entry : nextProps.data
+            });
+            this.setState({
+                comment: ""
+            });
+        }
     }
 
     renderComment= ({ item }) => (
@@ -26,8 +42,22 @@ class EntryView extends Component {
             <Text style={styles.commentTitle}>{'@' + item.user.username + ' <' + item.creatingDate + '>'}</Text>
             <Text style={styles.commentBody}>{item.comment}</Text>
         </View>
-    );
+    );   
 
+    renderAddCommentButton(){
+        if(this.props.loading){
+            return <Button ><Spinner /></Button>
+        }else{
+            return <Button onPress={this.addComment.bind(this)}>Einfügen!</Button> 
+        }
+    }
+
+    addComment(){
+        this.props.addComment({
+            entryId : this.state.entry.id, 
+            comment: this.state.comment
+        });
+    }
 
     get(part){
         let item = this.state.entry;
@@ -41,21 +71,22 @@ class EntryView extends Component {
                 case 'comments':
                 return (
                 <View style ={styles.commentList}>
-                <ScrollView >
                     <FlatList 
                     data={this.state.entry.comments}
                     renderItem={this.renderComment}
                     keyExtractor={item => item.id}
                     />
-                </ScrollView>
                 </View>
                 );     
                 
                 case 'addComment':
                     return (
                         <View style={styles.addComment}>
-                            <TextInput  placeholder="Kommentar eingeben!"></TextInput>
-                            <Button>Einfügen!</Button>
+                            <TextInput  placeholder="Kommentar eingeben!"
+                                onChangeText={(comment) => this.setState({ comment  }) }
+                                value={this.state.comment}
+                            ></TextInput>
+                            {this.renderAddCommentButton()}
                         </View>
                     );
             }
@@ -129,4 +160,14 @@ const styles = StyleSheet.create({
    }
 });
 
-export default EntryView;
+function mapStateToProps(state) {
+    return {
+      error: state.comments.error,
+      loading: state.comments.loading,
+      success: state.comments.success,
+      data: state.comments.data
+    };
+  }
+
+
+export default connect(mapStateToProps, {addComment})(EntryView);
