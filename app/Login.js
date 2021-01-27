@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, StyleSheet,Image,View,TextInput,TouchableOpacity} from 'react-native';
+import {Text, StyleSheet,Image,View,TextInput,TouchableOpacity, Keyboard, BackHandler } from 'react-native';
 import {Card, CardItem, Button, Input, Spinner, BottomMenu} from './common';
 import {connect} from 'react-redux';
 import {onLogin} from './redux';
@@ -61,13 +61,37 @@ const styles = StyleSheet.create({
 
 class Login  extends Component {
 
-    
   constructor() {
     super();
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      writingMode: false
     };
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow.bind(this));
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide.bind(this));
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick = () => {
+    return true;  
+  };
+
+
+  keyboardDidShow(){
+    console.log('showed');
+    this.setState({writingMode: true});
+  }
+
+  keyboardDidHide(){
+    console.log('hiden');
+    this.setState({writingMode: false});
   }
 
   home(){
@@ -139,13 +163,12 @@ class Login  extends Component {
         </View>
 
       </KeyboardAwareScrollView>
-        <View style={styles.menu}>
+        
+        { (!this.state.writingMode) && <View style={styles.menu}>
           <BottomMenu info={true} navigation={this.props.navigation}></BottomMenu>
-        </View>
+        </View>}
        </View>);}}
        
-
-
       function mapStateToProps(state) {
         return {
           error: state.auth.error,

@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
         paddingLeft: 5,
         paddingRight: 5,
         height: 100
+    }, message:{
+        fontSize: 18,
+
+    }, error:{
+        color: 'red'
     }
 });
 
@@ -31,15 +36,35 @@ class NewEntry  extends Component {
         super();
         this.state = {
             text : '',
-            category : {}
+            category : {},
+            succesMsgVisible: false
         };
     }
+
+    componentDidMount(){
+        this.props.error = '';
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.loading == false && nextProps.success == true){
+            this.onSuccess();
+        }
+    }
+    
+    onSuccess(){
+        this.setState({
+            succesMsgVisible: true
+        },()=>{setTimeout(() => {
+            this.props.navigation.navigate('Home');  
+        }
+        , 2000)}) 
+    }
+
 
     onAddEntryPressed(){
         console.log('state:' + JSON.stringify(this.state));
         const { text, category } = this.state;
         this.props.addEntry({text, category});
-      
     }
 
     renderAddEntryButton(){
@@ -50,9 +75,7 @@ class NewEntry  extends Component {
     }
 
     updateCategory(categoryP){
-        console.log(JSON.stringify(categoryP));
         this.setState({ category : categoryP});
-        console.log(JSON.stringify(this.state));
     }
 
     render(){
@@ -77,7 +100,10 @@ class NewEntry  extends Component {
                     </CardItem>
                     
                     <CardItem>
-                        <Text>{this.props.error}</Text>
+                    {this.state.succesMsgVisible &&
+                    !this.props.loading && this.props.success &&
+                     <Text style={styles.message}>Eintrag wurde erfolgreich eingefügt!</Text>}
+                        <Text style={[styles.message, styles.error]}>{this.props.error}</Text>
                     </CardItem>
                     
                 </Card>

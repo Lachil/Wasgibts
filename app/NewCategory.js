@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
         flex: 1
     }, message:{
         fontSize: 18,
-
     }, error:{
         color: 'red'
 
@@ -33,8 +32,12 @@ class NewCategory  extends Component {
         };
     }
 
+    componentDidMount(){
+        this.props.error = '';
+    }
+
     componentWillReceiveProps(nextProps) {
-        if (nextProps.success) {
+        if (nextProps.loading == false && nextProps.success == true) {
             this.onSuccess();
         }
       }
@@ -59,8 +62,6 @@ class NewCategory  extends Component {
             this.props.navigation.navigate('Home');  
         }
         , 2000)}) 
-        
-        
     }
 
     render(){
@@ -82,7 +83,9 @@ class NewCategory  extends Component {
                         {this.renderAddCategoryButton()}
                     </CardItem>
                     <CardItem>                    
-                    {this.state.succesMsgVisible && <Text style={styles.message}>Kategorie wurde erfolgreich eingefügt!</Text>}
+                    {this.state.succesMsgVisible &&
+                    !this.props.loading && this.props.success &&
+                     <Text style={styles.message}>Kategorie wurde erfolgreich eingefügt!</Text>}
                     <Text style={[styles.message, styles.error]}>{this.props.error}</Text>
                     </CardItem>
                 </Card>

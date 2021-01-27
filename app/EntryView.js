@@ -7,7 +7,7 @@ import {
   FlatList,
   ScrollView,
   TextInput, 
-  SafeAreaView} from 'react-native';
+  SafeAreaView, BackHandler} from 'react-native';
 import {connect} from 'react-redux'
 
 import {Input, Button, Spinner} from './common'
@@ -22,7 +22,7 @@ class EntryView extends Component {
             entry: props.route.params.entry,
             comment: ''
         };
-        console.log('EntryView state: ' + JSON.stringify(this.state.entry));
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
     }
 
     componentWillReceiveProps(nextProps){
@@ -31,11 +31,21 @@ class EntryView extends Component {
             this.setState({
                 entry : nextProps.data
             });
+            this.props.route.params.update(nextProps.data);
             this.setState({
                 comment: ""
             });
         }
     }
+    
+    componentWillUnmount(){
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    handleBackButtonClick = () => {
+        this.props.navigation.goBack(null);
+        return true;
+    };
 
     renderComment= ({ item }) => (
         <View style = {styles.comment}>
@@ -70,13 +80,13 @@ class EntryView extends Component {
                 return (item.comments.length === 0 ? 'Noch keine Kommentare' : (item.comments.length + ' Kommentare'));   
                 case 'comments':
                 return (
-                <View style ={styles.commentList}>
+                    <View style={styles.commentList}>
                     <FlatList 
                     data={this.state.entry.comments}
                     renderItem={this.renderComment}
                     keyExtractor={item => item.id}
                     />
-                </View>
+                    </View>
                 );     
                 
                 case 'addComment':
@@ -100,9 +110,9 @@ class EntryView extends Component {
             </Text></View>
             <View style={styles.body}><Text style={styles.bodyText}>{this.get('body')}</Text></View>
             <View style={styles.footer}><Text style={styles.footerText} >{this.get('footer')}</Text></View>
-            <View style={styles.comments}><Text style={styles.footerText} >{this.get('comments')}</Text></View>
             {this.get('addComment')}
-            
+            <View style={styles.comments}>{this.get('comments')}</View>
+             
         </View>
         );
     }
@@ -115,6 +125,7 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         backgroundColor: 'white',
         margin: 5,
+        marginBottom: 0,
         padding: 10,
         flex:1
     },header:{
@@ -144,19 +155,21 @@ const styles = StyleSheet.create({
    },commentBody:{
         fontSize: 18
    }, commentList:{
-       flex:1
+       height: "85%"
    },addComment:{
-
+        flexDirection: 'row',
+        marginTop: 5,
+        borderRadius: 25,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        /*
         position: 'absolute',
         flexDirection: 'row',
        bottom: 0,
        right:0,
        left:0,
-       borderWidth: 1,
-       marginTop: 5,
-       flex:1,
-       borderRadius: 25,
-       backgroundColor: 'white'
+       */
+      
    }
 });
 

@@ -3,6 +3,7 @@
 export const URL = 'https://app-mw.herokuapp.com';
 export const URL_LOGIN = URL + '/account/login';
 export const URL_REGIST = URL + '/account/add';
+export const URL_IS_TOKEN_VAILD = URL + '/account/vaild';
 
 export const URL_ALL_CATEGORIES = URL + '/categories/all';
 export const URL_ADD_CATEGORY = URL + '/categories/add';
@@ -27,6 +28,10 @@ export const ON_REGIST = 'ON_REGIST';
 export const REGIST_SUCCESS = 'REGIST_SUCCESS';
 export const REGIST_FAILED = 'REGIST_FAILED';
 
+
+export const ON_TOKEN_CHECK = 'ON_TOKEN_CHECK';
+export const TOKEN_VAILD = 'TOKEN_VAILD';
+export const TOKEN_NOT_VAILD = 'TOKEN_NOT_VAILD';
 
 export const LOADING_DATA = 'LOADING_DATA';
 export const LOADING_SUCCESS = 'LOADING_SUCCESS';

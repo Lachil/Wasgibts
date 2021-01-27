@@ -1,0 +1,3 @@
+(addIcon, editIcon, infoIcon) aus https://material.io/resources/icons
+
+(logo) selbst erstellt

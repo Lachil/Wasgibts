@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {TOKEN} from './redux'
+import {View, Text, StyleSheet, BackHandler} from 'react-native';
 import {BottomMenu} from './common';
-import MenuItem from './common/BottomMenu';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
@@ -37,6 +34,19 @@ const styles = StyleSheet.create({
 });
 
 class New  extends Component {
+    constructor(props){
+        super(props);
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+
+    componentWillUnmount(){
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    handleBackButtonClick = () => {
+        this.props.navigation.goBack(null);
+        return true;
+    };
 
     render(){
         return (

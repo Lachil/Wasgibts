@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, BackHandler } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {connect} from 'react-redux';
 import {getAllEntries} from './redux'
@@ -25,6 +25,7 @@ class Home  extends Component {
         this.state ={
             data: []
         };
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
     }
 
 
@@ -36,11 +37,25 @@ class Home  extends Component {
     
 
     componentDidMount() {
+        console.log('componentDidMount: screen viewed');
         this.props.getAllEntries();
     }   
 
+    componentWillUnmount(){
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    handleBackButtonClick = () => {
+        return true;
+    };
+
+    componentDidUpdate(){
+        console.log('componentDidUpdate: screen viewed');
+    }
+
+
     renderItem = ({ item }) => (
-        <Entry entry = {item} navigation={this.props.navigation}></Entry>    
+        <Entry entry = {item}  navigation={this.props.navigation}></Entry>    
     );
     
     render(){

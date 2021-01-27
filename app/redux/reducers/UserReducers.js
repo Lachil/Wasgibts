@@ -1,4 +1,6 @@
-import { LOGIN_SUCCESS, ON_LOGIN, LOGIN_FAILED, ON_REGIST, REGIST_SUCCESS, REGIST_FAILED } from "../Constants";
+import { LOGIN_SUCCESS, ON_LOGIN, LOGIN_FAILED, 
+    ON_REGIST, REGIST_SUCCESS, REGIST_FAILED, 
+    ON_TOKEN_CHECK, TOKEN_VAILD, TOKEN_NOT_VAILD } from "../Constants";
 
 //reducers
 const INITIAL_VALUE = { user: null, loading: false, error: '',};
@@ -61,3 +63,29 @@ export const regist = (state =INITIAL_VALUE, action) => {
             };
         }
  }
+
+ export const token = (state = { user: null, loading: false}, action) => {
+    switch(action.type){
+        case ON_TOKEN_CHECK:
+            return {
+                ...state,
+                loading: true
+            }
+        case TOKEN_VAILD:
+            return{
+                user: action.user,
+                loading: false
+            };
+        case TOKEN_NOT_VAILD:
+            return {
+                ...state,
+                user: null,
+                loading: false
+            }
+        default:
+            return {
+                ...state
+            };
+        }
+ }
+

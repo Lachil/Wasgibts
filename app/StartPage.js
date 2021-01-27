@@ -1,36 +1,49 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Text, View, StyleSheet,Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
+import {checkToken} from './redux'
 import {Spinner} from './common';
 import { TOKEN } from './redux';
 
 
 class StartPage extends Component{
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
     }
     
     componentDidMount() {
         AsyncStorage.getItem(TOKEN).then((token) => {
             if (token) {
-                this._navigate('Home');
                 axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
                 console.log('token is setted: ' + axios.defaults.headers.common['Authorization']);
+                this.props.checkToken();
               }else {
                 this._navigate('Login');
               }
         }) 
       }
 
-      _navigate(screen) {
-        setTimeout(() => {
-          this.props.navigation.navigate(screen);
-        }, 1000 );
-    
+    componentWillReceiveProps(nextProps){
+      console.log('startpage.props: ' + JSON.stringify(nextProps));
+      if(nextProps.loading == false){
+        if(nextProps.user){
+          this._navigate('Home');
+        }else{
+          this._navigate('Login');  
+        }
       }
+    }  
+
+  _navigate(screen) {
+    setTimeout(() => {
+      this.props.navigation.navigate(screen);
+    }, 1000 );
+
+  }
 
 
     render(){
@@ -65,4 +78,12 @@ const styles = StyleSheet.create({
     }
 });
 
-export default StartPage;
+
+const mapStateToProps = state => {
+  return {
+      user: state.token.user,
+      loading: state.token.loading,
+  }
+}
+
+export default connect(mapStateToProps, {checkToken})(StartPage);

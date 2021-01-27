@@ -26,8 +26,15 @@ class Entry extends Component {
     
     }
 
+    updateEntry(item){
+        this.setState({
+            entry:item
+        });
+    }
+
+
     onPress(){
-        this.props.navigation.navigate('EntryView', {entry : this.state.entry});
+        this.props.navigation.navigate('EntryView', {entry : this.state.entry, update: this.updateEntry.bind(this)});
     }
 
     render(){

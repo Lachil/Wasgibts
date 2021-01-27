@@ -1,8 +1,5 @@
 import React,{Component} from 'react';
-import {Text, FlatList, View, StyleSheet, ScrollView} from 'react-native';
-
-import {Card, CardItem} from './common'
-
+import {Text, View, StyleSheet, ScrollView, BackHandler} from 'react-native';
 
 
 const styles = StyleSheet.create({
@@ -31,6 +28,19 @@ const styles = StyleSheet.create({
 
 class Info  extends Component {
 
+    constructor(props){
+        super(props);
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+
+    componentWillUnmount(){
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+    }
+    
+    handleBackButtonClick = () => {
+        this.props.navigation.goBack(null);
+        return true;
+    };
     
     render(){
         return (

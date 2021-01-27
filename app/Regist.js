@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Keyboard} from 'react-native';
 import {connect} from 'react-redux';
 
 import {Card, CardItem, Button, Input, Spinner} from './common';
@@ -25,8 +25,11 @@ class Regist extends Component {
     this.state = {  
       username: '',
       password: '',
-      categories: []
+      categories: [],
+      writingMode: false
     };
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow.bind(this));
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide.bind(this));
   }
   
   componentWillReceiveProps(nextProps) {
@@ -36,6 +39,21 @@ class Regist extends Component {
   }
 
   componentDidMount() {}
+
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
+
+  keyboardDidShow(){
+    console.log('showed');
+    this.setState({writingMode: true});
+  }
+
+  keyboardDidHide(){
+    console.log('hiden');
+    this.setState({writingMode: false});
+  }
 
   errorMessage(){
     if(!this.props.error){
@@ -81,9 +99,9 @@ class Regist extends Component {
         </CardItem>
         {this.errorMessage()}
       </Card>
-      <View style={styles.menu}>
+      {(!this.state.writingMode) && <View style={styles.menu}>
           <BottomMenu info={true} navigation={this.props.navigation}></BottomMenu>
-      </View>
+      </View>}
        
       </View>
       
